@@ -62,7 +62,7 @@ sector_order_2023 <- co2_sector %>%
   pull(Sector)
 
 sector_colors <- setNames(
-  viridis(n = n_distinct(co2_sector$Sector), option = color_scheme, direction = 1, alpha = 0.85), sector_order_2023
+  viridis(n = n_distinct(co2_sector$Sector), option = "F", direction = 1, alpha = 0.85), sector_order_2023
 )
 
 # Country Data - Total Emissions ----
@@ -337,7 +337,7 @@ server <- function(input, output, session) {
     ggplot(final_data_line(), aes(x = Year, y = CO2_Mt, 
                                   group = Country, 
                                   color = Country_highlight)) +
-      geom_line(alpha = 0.5, linewidth = 1) +
+      geom_line(alpha = 0.7, linewidth = 1) +
       geom_vline(xintercept = as.numeric(selected_year()), 
                  #color = "red",
                  linewidth = 0.7) +
@@ -348,6 +348,7 @@ server <- function(input, output, session) {
         y = ifelse(input$capita_selection==FALSE, "CO₂-Equivalent Emissions (Megatons)",  "CO₂-Equivalent Emissions (tons CO2eq per capita per year)"),
         color = "Country"
       ) +
+      labs(fill='')+
       theme(
         axis.text.x = element_text(angle = 45, hjust = 1)
         #,
@@ -394,9 +395,10 @@ server <- function(input, output, session) {
         x = "Year",
         y = "Percentage of Total Emissions"
       ) +
+      labs(fill='')+
       theme(
         axis.text.x = element_text(angle = 45, hjust = 1),
-        legend.position = "none"
+        legend.position = "right"
       )
   })
 }
