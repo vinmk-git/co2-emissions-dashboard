@@ -81,7 +81,7 @@ co2_country_capita <- melted_capita %>%
   mutate(Year = as.numeric(Year)) %>%
   arrange(desc(Year), desc(CO2_Mt))
 
-welcome_text <- "Welcome to my CO₂ Emissions Explorer! In this interactive dashboard you can explore global carbon dioxide emissions from 1970 to 2023. Use the year slider to see different years through time and learn how emissions have evolved broken down by sector. Toggle between total emissions and per-capita data to understand both absolute contributions and individual footprints. Select specific countries you are interested in, or view all nations at once."
+welcome_text <- "Welcome to my CO₂ Emissions Explorer. With this interactive dashboard you can explore worldwide carbon dioxide emissions starting from 1970 up to 2023. Drag the year slider to see different years and observe how emissions have changed over time, broken down by sector. Switch between total and per-capita emissions to see absolute contributions as well as what country emissions per person look like. Choose which countries you want to see, or see all the countries at once."
 
 # Get all unique countries for selection
 all_countries <- sort(unique(co2_country$Country))
@@ -102,7 +102,7 @@ ui <- page_fluid(
   ),
   
   # Title
-  titlePanel("Digging Deeper into CO₂ Emissions"),
+  titlePanel("CO₂-Equivalents Data Dashboard Based on EDGAR"),
   
   # Layout
   sidebarLayout(
@@ -169,7 +169,7 @@ server <- function(input, output, session) {
   thematic_shiny(font = "Lato", )
   if (interactive()) bs_themer()
   
-  theme_set(theme_minimal(base_size = 14))
+  theme_set(theme_minimal(base_size = 16))
   
   selected_year <- reactive(input$animation)
   selected_countries <- reactive({
@@ -322,7 +322,8 @@ server <- function(input, output, session) {
       textposition = 'outside',
       sort = FALSE,
       textinfo = 'label+percent',
-      hoverinfo = 'label+value+percent'
+      #hoverinfo = 'label+value+percent',
+      hovertemplate = "<b>%{label}:</b> <br>Contribution: %{percent} </br> %{value:.2f} Megatons <extra></extra>" 
     ) %>%
       layout(
         title = paste("Emissions by Sector -", as.character(selected_year())),
@@ -342,9 +343,9 @@ server <- function(input, output, session) {
                  linewidth = 0.7) +
       scale_color_viridis(discrete = TRUE, option = color_scheme, direction = 1) +
       labs(
-        title = "CO₂ Emissions Trends Since 1970",
+        title = "CO₂-Equivalents Emission Trends Since 1970",
         x = "Year",
-        y = ifelse(input$capita_selection==FALSE, "CO₂ Emissions (Megatons)",  "CO₂ Emissions (tons CO2eq per capita per year)"),
+        y = ifelse(input$capita_selection==FALSE, "CO₂-Equivalent Emissions (Megatons)",  "CO₂-Equivalent Emissions (tons CO2eq per capita per year)"),
         color = "Country"
       ) +
       theme(
@@ -366,9 +367,9 @@ server <- function(input, output, session) {
                  linewidth = 0.7) +
       scale_fill_manual(values = c(viridis(n_top_countries(), option = color_scheme), "grey95")) +
       labs(
-        title = "Total CO₂ Emissions stacked",
+        title = "Total CO₂-Equivalent Emissions stacked",
         x = "Year",
-        y = "CO₂ Emissions (Mt)"
+        y = ifelse(input$capita_selection==FALSE, "CO₂-Equivalent Emissions (Megatons)",  "CO₂-Equivalent Emissions (tons CO2eq per capita per year)"),
       ) +
       theme(
         axis.text.x = element_text(angle = 45, hjust = 1),
@@ -389,7 +390,7 @@ server <- function(input, output, session) {
       scale_fill_manual(values = c(viridis(n_top_countries(), option = color_scheme), "grey95")) +
       scale_y_continuous(labels = scales::percent_format()) +
       labs(
-        title = "Share of Total CO₂ Emissions",
+        title = "Share of Total CO₂-Equivalent Emissions",
         x = "Year",
         y = "Percentage of Total Emissions"
       ) +
