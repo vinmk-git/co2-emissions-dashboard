@@ -1,20 +1,20 @@
 # CO₂ Emissions Explorer 🌍
 
-An interactive Shiny dashboard for exploring global carbon dioxide emissions from 1970-2023, with breakdowns by country, sector, and per-capita metrics.
+This is an interactive R Shiny dashboard for exploring global carbon dioxide emissions from 1970-2023, with breakdowns by country, sector, and per-capita metrics.
 
 **Live demo:** [https://vinmk-shiny.shinyapps.io/co2_viz_0/](https://vinmk-shiny.shinyapps.io/co2_viz_0/)
 
 ## Features
 
 - **Interactive time slider** - Explore emissions trends across 50+ years
-- **Sector breakdown** - Visualize emissions by power, industry, transport, agriculture, and more
+- **Sector breakdown** - Visualize emissions by power industry, transport, agriculture, and more
 - **Country comparison** - Select specific countries or view all nations simultaneously
 - **Per capita toggle** - Switch between total emissions and per-person footprints
 - **Multiple visualizations**:
-  - Line charts showing emission trends over time
+  - Line charts show emission trends over time
   - Pie chart of sectoral contributions
   - Stacked area charts (absolute and proportional)
-- **Data export** - Download filtered datasets for further analysis
+- **Data export** - Download the datasets to analyse the data yourself
 
 ## Dataset
 
@@ -58,13 +58,9 @@ shiny::runApp()
 ## Acknowledgments
 
 - **Data source:** European Commission Joint Research Centre (JRC) EDGAR database
-- **Development assistance:** Claude AI (Anthropic) was used for debugging, code optimization, and cleaning up reactive expressions
+- **Development assistance:** Claude AI (Anthropic) was used for debugging, code optimization, cleaning up reactive expressions, and writing this README :)
 - **Color palettes:** viridis package for accessible, perceptually-uniform colors
 
 ## License
 
 Data usage is subject to EDGAR terms and conditions. See the dataset's "citation and references" sheet for details.
-
----
-
-*Built with R Shiny • Deployed on shinyapps.io*
